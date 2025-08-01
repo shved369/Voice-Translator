@@ -7,6 +7,7 @@ import uuid
 
 app = FastAPI()
 
+# Разрешаем CORS для всех источников
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -45,6 +46,7 @@ async def diarize_and_translate(
         ]
     }
 
+    # Очистка временных файлов
     try:
         os.remove(audio_path)
         os.rmdir(temp_dir)
@@ -53,6 +55,8 @@ async def diarize_and_translate(
 
     return JSONResponse(content=fake_response)
 
-    if __name__ == "__main__":
+# Запуск сервера при прямом вызове
+if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", host="0.0.0.0", port=10000, reload=False)
+
